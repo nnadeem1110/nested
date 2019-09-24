@@ -1,0 +1,15 @@
+#this playbook is all about how u can user nested 
+---
+        - hosts: test2
+          become: true
+          tasks:
+                  - name: to add users in existing group using nested
+                    user:
+                            name: "{{ item[0] }}" #nested starts from 0
+                            state: present
+                            groups: "{{ item[1] }}" 
+                            append: yes
+                    with_nested:
+                            - [user1,user2] #nested will add both users in first group(root). after the it will add both users in second group. This is how nested works.
+                            - [root,new]
+                        
